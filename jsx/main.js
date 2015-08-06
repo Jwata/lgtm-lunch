@@ -1,46 +1,44 @@
-var Comment = React.createClass({
+var Food = React.createClass({
   render: function() {
+    console.log(this.props)
     return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
-        </h2>
-        {this.props.children}
+      <div className="col-md-2 col-sm-3 col-xs-6">
+        <div className="thumbnail">
+          <div className="image" style={{height: '162px', overflowY: 'hidden', backgroundColor: '#F5F5F5'}}>
+            <a href="http://lgtm.in/i/GdELVjxmq">
+              <img alt="" src={this.props.img} style={{maxHeight: '200px'}} />
+            </a>
+          </div>
+          <div className="row">
+            <div className="col-md-6 col-xs-6 col-sm-6">
+              <img src="https://a248.e.akamai.net/assets.github.com/images/icons/emoji/moneybag.png" alt="Credits" style={{height: '16px', width: '16px'}} data-toggle="tooltip" title="" data-original-title="Credits" />
+              109
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 });
 
 
-var CommentList = React.createClass({
+var FoodList = React.createClass({
   render: function() {
     console.log(this.props.files);
-    var commentNodes = this.props.files.map(function (comment) {
+    var foodNodes = this.props.files.map(function (food) {
       return (
-        <Comment author={comment.author}>
-          <img src={comment.thumb_64} />
-        </Comment>
+        <Food author={food.author} img={food.thumb_360} />
       );
     });
     return (
-      <div className="commentList">
-        {commentNodes}
+      <div>
+        {foodNodes}
       </div>
     );
   }
 });
 
-var CommentForm = React.createClass({
-  render: function() {
-    return (
-      <div className="commentForm">
-        Hello, world! I am a CommentForm.
-      </div>
-    );
-  }
-});
-
-var CommentBox = React.createClass({
+var MainGallery = React.createClass({
   getInitialState: function() {
     return {files: [] };
   },
@@ -59,10 +57,8 @@ var CommentBox = React.createClass({
   },
   render: function() {
     return (
-      <div className="commentBox">
-        <h1>Comments</h1>
-        <CommentList files={this.state.files}/>
-        <CommentForm />
+      <div>
+        <FoodList files={this.state.files}/>
       </div>
     );
   }
@@ -70,6 +66,6 @@ var CommentBox = React.createClass({
 
 
 React.render(
-  <CommentBox url="https://slack.com/api/files.list?token=xoxp-8665634432-8665626855-8720456611-757dc5" />,
-  document.getElementById('comment-box')
+  <MainGallery url="https://slack.com/api/files.list?token=xoxp-8665634432-8665626855-8720456611-757dc5&types=images" />,
+  document.getElementById('main-gallery-container')
 );
