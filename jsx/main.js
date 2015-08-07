@@ -1,10 +1,31 @@
+var apiEndPoint = "https://slack.com/api"
+var token = "xoxp-8665634432-8665626855-8720456611-757dc5"
+
 var Food = React.createClass({
+  postReaction: function(reaction) {
+    var id = this.props.id
+    var queryStr = $.param({
+        token: token,
+        name: reaction,
+        file: id
+    });
+    var requestUrl = apiEndPoint + '/reactions.add?' + queryStr
+    $.get(requestUrl);
+  },
+  onClickThumbsUp: function() {
+    console.log("onClickThumbsUp")
+    this.postReaction("thumbsup")
+  },
+  onClickThumbsDown: function() {
+    console.log("onClickThumbsDown")
+    this.postReaction("thumbsdown")
+  },
   render: function() {
     return (
       <div className="col-md-2 col-sm-3 col-xs-6">
         <div className="thumbnail">
           <div className="image" style={{height: '162px', overflowY: 'hidden', backgroundColor: '#F5F5F5'}}>
-            <a href="">
+            <a href={this.props.url}>
               <img alt="" src={this.props.img} style={{maxHeight: '200px'}} />
             </a>
           </div>
@@ -25,12 +46,12 @@ var Food = React.createClass({
           </div>
           <div className="row">
             <div className="col-md-6 col-xs-6 col-sm-6">
-              <a href="" data-toggle="tooltip" title="" data-original-title="Upvote">
+              <a onClick={this.onClickThumbsUp}>
                 <img src="https://a248.e.akamai.net/assets.github.com/images/icons/emoji/+1.png" alt="Like" style={{height: '16px', width: '16px'}} />
               </a>
             </div>
             <div className="col-md-6 col-xs-6 col-sm-6" style={{'textAlign': 'right'}}>
-              <a href="" data-toggle="tooltip" title="" data-original-title="Report">
+              <a onClick={this.onClickThumbsDown}>
                 <img src="https://a248.e.akamai.net/assets.github.com/images/icons/emoji/-1.png" alt="Report" style={{height: '16px', width: '16px'}} />
               </a>
             </div>
@@ -47,8 +68,9 @@ var FoodList = React.createClass({
     var foodNodes = this.props.files.map(function (food) {
       good = food.reactions.filter(function(r) { return r.name == '+1'; }).length;
       bad = food.reactions.filter(function(r) { return r.name == '-1'; }).length;
+      console.log(food)
       return (
-        <Food title={food.title} img={food.thumb_360} good={good} bad={bad} />
+        <Food id={food.id} title={food.title} img={food.thumb_360} good={good} bad={bad} url={food.permalink}/>
       );
     });
     return (
