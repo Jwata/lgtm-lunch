@@ -1,22 +1,36 @@
 var Food = React.createClass({
   render: function() {
-    console.log(this.props)
     return (
       <div className="col-md-2 col-sm-3 col-xs-6">
         <div className="thumbnail">
           <div className="image" style={{height: '162px', overflowY: 'hidden', backgroundColor: '#F5F5F5'}}>
-            <a href="http://lgtm.in/i/GdELVjxmq">
+            <a href="">
               <img alt="" src={this.props.img} style={{maxHeight: '200px'}} />
             </a>
           </div>
           <div className="row">
+            <div className="col-md-12 col-xs-12 col-sm-12">
+              <p>{this.props.title}</p>
+            </div>
+          </div>
+          <div className="row">
             <div className="col-md-6 col-xs-6 col-sm-6">
-              <a href="http://lgtm.in/u/GdELVjxmq" data-toggle="tooltip" title="" data-original-title="Upvote">
+              <img src="https://a248.e.akamai.net/assets.github.com/images/icons/emoji/meat_on_bone.png" alt="MeatOnBone" style={{height: '16px', width: '16px'}} data-toggle="tooltip" data-origninal-title="MeatOnBone" />
+              {this.props.good}
+            </div>
+            <div className="col-md-6 col-xs-6 col-sm-6" style={{'textAlign': 'right'}}>
+              {this.props.bad}
+              <img src="https://a248.e.akamai.net/assets.github.com/images/icons/emoji/shit.png" alt="Shit" style={{height: '16px', width: '16px'}} data-toggle="tooltip" data-origninal-title="Shit" />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6 col-xs-6 col-sm-6">
+              <a href="" data-toggle="tooltip" title="" data-original-title="Upvote">
                 <img src="https://a248.e.akamai.net/assets.github.com/images/icons/emoji/+1.png" alt="Like" style={{height: '16px', width: '16px'}} />
               </a>
             </div>
-            <div className="col-md-6 col-xs-6 col-sm-6" style={{'text-align': 'right'}}>
-              <a href="http://lgtm.in/r/GdELVjxmq" data-toggle="tooltip" title="" data-original-title="Report">
+            <div className="col-md-6 col-xs-6 col-sm-6" style={{'textAlign': 'right'}}>
+              <a href="" data-toggle="tooltip" title="" data-original-title="Report">
                 <img src="https://a248.e.akamai.net/assets.github.com/images/icons/emoji/-1.png" alt="Report" style={{height: '16px', width: '16px'}} />
               </a>
             </div>
@@ -30,10 +44,11 @@ var Food = React.createClass({
 
 var FoodList = React.createClass({
   render: function() {
-    console.log(this.props.files);
     var foodNodes = this.props.files.map(function (food) {
+      good = food.reactions.filter(function(r) { return r.name == '+1'; }).length;
+      bad = food.reactions.filter(function(r) { return r.name == '-1'; }).length;
       return (
-        <Food author={food.author} img={food.thumb_360} />
+        <Food title={food.title} img={food.thumb_360} good={good} bad={bad} />
       );
     });
     return (
