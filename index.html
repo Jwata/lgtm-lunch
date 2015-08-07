@@ -29,52 +29,42 @@
 
 <body>
 
+
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="#">LGTM lunch</a>
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <!-- <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul> -->
-            </div>
-            <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
 
     <!-- Page Content -->
     <div class="container">
+        <!-- message -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chrome">
+                    <div class="alert alert-block alert-info" id="protip1">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Please help us:</strong>
+                        We're short of food menus. Please post your favorite lunch menu using
+                        <a href="javascript:void(0);" onclick="window.open('https://lgtm-lunch.slack.com/', '_blank')">
+                            <span class="label label-info">Slack</span>
+                        </a>
+                        .
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- main content-->
         <div class="row" id="main-gallery-container"></div>
 
         <hr>
-
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; LGTM Lunch 2015</p>
-                </div>
-            </div>
-        </footer>
 
     </div>
     <!-- /.container -->
