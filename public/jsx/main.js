@@ -1,5 +1,11 @@
-var apiEndPoint = "https://slack.com/api"
-var token = "xoxp-8665634432-8665626855-8720456611-757dc5"
+var teamId = "LGTM Lunch";
+var clientId = "8665634432.8720154930";
+var clientSecret = "fba1bd5c7eb9d53d5c27b37122504a31";
+var apiUrl = "https://slack.com/api";
+var oauthUrl = "https://slack.com/oauth/authorize";
+var redirectUri = "http://localhost:9292/";
+
+var token = "xoxp-8665634432-8665626855-8720456611-757dc5";
 
 var Food = React.createClass({
   postReaction: function(reaction) {
@@ -9,7 +15,7 @@ var Food = React.createClass({
         name: reaction,
         file: id
     });
-    var requestUrl = apiEndPoint + '/reactions.add?' + queryStr
+    var requestUrl = apiUrl + '/reactions.add?' + queryStr
     $.get(requestUrl);
   },
   onClickThumbsUp: function() {
@@ -107,6 +113,50 @@ var MainGallery = React.createClass({
   }
 });
 
+function getParameterByName(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+var code = getParameterByName('code');
+
+var tokenParam = $.param({
+  client_id: clientId,
+  client_secret: clientSecret,
+  code: code,
+  redirect_uri: redirectUri
+});
+tokenUrl = apiUrl + '/oauth.access?' + tokenParam;
+$.get(tokenUrl).then(function(ret) {
+  console.log(ret);
+  if (ret.ok) return ret.access_token;
+  // error handling
+}).then(function(token) {
+  console.log(token);
+});
+
+
+var AuthButton = React.createClass({
+  render: function() {
+    var authParam = $.param({
+      client_id: clientId,
+      team: teamId,
+      redirect_uri: redirectUri
+    });
+    var authUrl = oauthUrl + '?' + authParam;
+    return (
+       <a href={authUrl}>slack</a>
+    );
+  }
+
+});
+
+React.render(
+   <AuthButton/>,
+   document.getElementById('auth-button')
+);
 
 React.render(
   <MainGallery url="https://slack.com/api/files.list?token=xoxp-8665634432-8665626855-8720456611-757dc5&types=images" />,
