@@ -2,7 +2,6 @@ var teamId = "LGTM Lunch";
 var clientId = "8665634432.8720154930";
 var clientSecret = "fba1bd5c7eb9d53d5c27b37122504a31";
 var apiUrl = "https://slack.com/api";
-var oauthUrl = "https://slack.com/oauth/authorize";
 var redirectUri = "http://localhost:9292/";
 
 var token = "xoxp-8665634432-8665626855-8720456611-757dc5";
@@ -120,38 +119,70 @@ function getParameterByName(name) {
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-var code = getParameterByName('code');
-
-var tokenParam = $.param({
-  client_id: clientId,
-  client_secret: clientSecret,
-  code: code,
-  redirect_uri: redirectUri
-});
-tokenUrl = apiUrl + '/oauth.access?' + tokenParam;
-$.get(tokenUrl).then(function(ret) {
-  console.log(ret);
-  if (ret.ok) return ret.access_token;
-  // error handling
-}).then(function(token) {
-  console.log(token);
-});
-
+function getParameterByName(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 var AuthButton = React.createClass({
+  //getInitialState: function() {
+  //  return {token: window.localStorage.getItem('access_token') };
+  //},
+  //componentDidMount: function() {
+  //  // get acess token
+  //  code = getParameterByName('code');
+  //  if (code) {
+  //    var getTokenUrl = apiUrl + '/oauth.access?' + $.param({
+  //      client_id: clientId,
+  //      client_secret: clientSecret,
+  //      code: code,
+  //      redirect_uri: redirectUri
+  //    });
+  //
+  //    $.get(getTokenUrl).then(function(ret) {
+  //      console.log(ret);
+  //      if (ret.ok) return ret.access_token;
+  //      // TODO error handling
+  //    }).then(function(token) {
+  //      console.log(token);
+  //
+  //      // set token
+  //      this.setState({token: token})
+  //      window.localStorage.setItem('access_token', token);
+  //
+  //    }).bind(this);
+  //  }
+  //
+  //  // autheticate using token
+  //  if (!this.state.token) {
+  //    var checkTokenUrl = apiUrl + '/oauth.access?' + $.param({
+  //        token: this.state.token
+  //      });
+  //    $.get(checkTokenUrl).then(function (ret) {
+  //      console.log(ret);
+  //      console.log(this);
+  //      // TODO error handling
+  //    }).bind(this);
+  //  }
+  //},
   render: function() {
     var authParam = $.param({
       client_id: clientId,
       team: teamId,
       redirect_uri: redirectUri
     });
+    var oauthUrl = "https://slack.com/oauth/authorize";
     var authUrl = oauthUrl + '?' + authParam;
     return (
        <a href={authUrl}>slack</a>
     );
   }
-
 });
+
+OAuth.initialize('E6CBuU53P5en_fo5d3QJkYq4oHg');
+OAuth.redirect('slack', redirectUri);
 
 React.render(
    <AuthButton/>,
