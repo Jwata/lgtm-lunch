@@ -132,13 +132,24 @@ tokenUrl = apiUrl + '/oauth.access?' + tokenParam;
 $.get(tokenUrl).then(function(ret) {
   console.log(ret);
   if (ret.ok) return ret.access_token;
-  // error handling
+  // TODO error handling
 }).then(function(token) {
-  console.log(token);
+  window.localStorage.setItem("access_token", token);
 });
 
 
-var AuthButton = React.createClass({
+//var params = $.param({
+//  types: "images",
+//  token: token
+//});
+//
+//React.render(
+//    <MainGallery url={apiUrl + '/file.list?' + params} />,
+//    document.getElementById('main-gallery-container')
+//);
+
+// Profile
+var Profile = React.createClass({
   render: function() {
     var authParam = $.param({
       client_id: clientId,
@@ -147,18 +158,13 @@ var AuthButton = React.createClass({
     });
     var authUrl = oauthUrl + '?' + authParam;
     return (
-       <a href={authUrl}>slack</a>
+       <a href={authUrl}> Login with <img src="/images/slack_rgb.png" alt="Slack" height="30px" /></a>
     );
   }
 
 });
-
 React.render(
-   <AuthButton/>,
-   document.getElementById('auth-button')
+   <Profile/>,
+   document.getElementById('profile')
 );
 
-React.render(
-  <MainGallery url="https://slack.com/api/files.list?token=xoxp-8665634432-8665626855-8720456611-757dc5&types=images" />,
-  document.getElementById('main-gallery-container')
-);
