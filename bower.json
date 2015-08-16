@@ -1,0 +1,23 @@
+{
+  "name": "lgtm-lunch",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Jwata/lgtm-lunch",
+  "authors": [
+    "Junji Watanabe <watanabe0621@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.20",
+    "react": "~0.13.3",
+    "jsx-requirejs-plugin": "~0.6.2",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5"
+  }
+}
