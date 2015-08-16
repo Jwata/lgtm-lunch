@@ -35,6 +35,7 @@ require(['jquery', 'react', 'jsx!components/FoodGallery'], function ($, React, F
   );
 });
 
+// TODO create auth service to handle authentication
 //var teamId = "LGTM Lunch";
 //var clientId = "8665634432.8720154930";
 //var clientSecret = "fba1bd5c7eb9d53d5c27b37122504a31";
