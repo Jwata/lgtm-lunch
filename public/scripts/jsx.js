@@ -1,0 +1,1 @@
+../bower_components/jsx-requirejs-plugin/js/jsx.js
